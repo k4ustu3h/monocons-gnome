@@ -1,7 +1,7 @@
 [Icon Theme]
 Name=monocons
 Comment=Dynamic Material You monochrome icons for GNOME
-Inherits=Adwaita
+Inherits=Papirus,Adwaita
 Directories=scalable/apps
 
 [scalable/apps]

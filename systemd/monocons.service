@@ -1,0 +1,6 @@
+[Unit]
+Description=Rebuild monocons icon theme
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/monocons/build.sh

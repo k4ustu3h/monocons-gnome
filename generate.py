@@ -18,16 +18,16 @@ CANVAS_SIZE = 192
 INNER_SIZE = 118
 INNER_OFFSET = (CANVAS_SIZE - INNER_SIZE) / 2
 
+GTK_CSS = os.path.expanduser("~/.config/gtk-4.0/gtk.css")
+
 
 def get_gtk_color(name):
-    css = os.path.expanduser("~/.config/gtk-4.0/gtk.css")
-    if not os.path.exists(css):
+    if not os.path.exists(GTK_CSS):
         return None
 
-    with open(css) as f:
-        data = f.read()
+    with open(GTK_CSS) as f:
+        match = re.search(rf"@define-color {name} (#[0-9a-fA-F]+);", f.read())
 
-    match = re.search(rf"@define-color {name} (#[0-9a-fA-F]+);", data)
     return match.group(1) if match else None
 
 
@@ -53,28 +53,24 @@ def extract_svg_data(svg_path):
     viewbox = root.attrib.get("viewBox", "0 0 192 192")
     _, _, width, height = map(float, viewbox.split())
 
-    paths = []
+    elements = []
     for elem in root.iter():
-        if elem.tag in ("path", "rect", "circle", "polygon", "g"):
+        if elem.tag in {"path", "rect", "circle", "polygon", "g"}:
             elem.attrib.pop("fill", None)
             elem.attrib.pop("stroke", None)
-            paths.append(ET.tostring(elem, encoding="unicode"))
+            elements.append(ET.tostring(elem, encoding="unicode"))
 
-    return "\n".join(paths), width, height
+    return "\n".join(elements), width, height
 
 
 def build_icon(path_data, fg, bg, orig_w, orig_h):
     scale = INNER_SIZE / max(orig_w, orig_h)
 
-    return f"""<svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
-
+    return f"""<svg viewBox="0 0 {CANVAS_SIZE} {CANVAS_SIZE}" xmlns="http://www.w3.org/2000/svg">
   <path fill="{bg}" d="{SQUIRCLE_PATH}"/>
-
-  <g fill="{fg}"
-     transform="translate({INNER_OFFSET},{INNER_OFFSET}) scale({scale})">
+  <g fill="{fg}" transform="translate({INNER_OFFSET},{INNER_OFFSET}) scale({scale})">
     {path_data}
   </g>
-
 </svg>
 """
 
@@ -92,24 +88,20 @@ def generate_icons():
     bg = get_background()
 
     for file in os.listdir(BASE_DIR):
-        if not file.endswith(".svg"):
-            continue
+        if file.endswith(".svg"):
+            src = os.path.join(BASE_DIR, file)
+            dst = os.path.join(OUTPUT_DIR, file)
 
-        src = os.path.join(BASE_DIR, file)
-        dst = os.path.join(OUTPUT_DIR, file)
+            paths, w, h = extract_svg_data(src)
+            with open(dst, "w") as f:
+                f.write(build_icon(paths, fg, bg, w, h))
 
-        paths, w, h = extract_svg_data(src)
-        final_svg = build_icon(paths, fg, bg, w, h)
-
-        with open(dst, "w") as f:
-            f.write(final_svg)
-
-        print(f"✔ generated {file}")
+            print(f"generated {file}")
 
 
 def update_cache():
     subprocess.run(
-        ["gtk-update-icon-cache", THEME_DIR],
+        ["gtk-update-icon-cache", "-f", THEME_DIR],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
@@ -120,7 +112,7 @@ def main():
     copy_index()
     generate_icons()
     update_cache()
-    print("\n🎨 monocons rebuilt successfully\n")
+    print("\nmonocons rebuilt successfully\n")
 
 
 if __name__ == "__main__":

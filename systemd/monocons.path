@@ -1,0 +1,8 @@
+[Unit]
+Description=Watch GTK accent changes
+
+[Path]
+PathChanged=%h/.config/gtk-4.0/
+
+[Install]
+WantedBy=default.target

@@ -8,6 +8,7 @@ ICON_DIR="$HOME/.local/share/icons/$THEME_NAME"
 SYSTEMD_USER_DIR="$HOME/.config/systemd/user"
 
 ACTIVATE=false
+UNINSTALL=false
 
 # Parse flags
 for arg in "$@"; do
@@ -15,13 +16,48 @@ for arg in "$@"; do
 	--activate | -a)
 		ACTIVATE=true
 		;;
+	--uninstall | -u)
+		UNINSTALL=true
+		;;
 	*)
 		echo "Unknown option: $arg"
-		echo "Usage: $0 [--activate|-a]"
+		echo "Usage: $0 [--activate|-a] [--uninstall|-u]"
 		exit 1
 		;;
 	esac
 done
+
+# UNINSTALL MODE
+
+if [ "$UNINSTALL" = true ]; then
+	echo "Uninstalling $THEME_NAME..."
+
+	# Stop and disable systemd units
+	systemctl --user disable --now monocons.path 2>/dev/null || true
+	systemctl --user disable --now monocons.service 2>/dev/null || true
+
+	# Remove systemd files
+	rm -f "$SYSTEMD_USER_DIR/monocons.path"
+	rm -f "$SYSTEMD_USER_DIR/monocons.service"
+
+	systemctl --user daemon-reload
+
+	# Remove installed files
+	rm -rf "$INSTALL_DIR"
+	rm -rf "$ICON_DIR"
+
+	# If currently active, revert to Adwaita
+	CURRENT=$(gsettings get org.gnome.desktop.interface icon-theme | tr -d "'")
+	if [[ "$CURRENT" == "$THEME_NAME" ]]; then
+		echo "Reverting icon theme to Adwaita..."
+		gsettings set org.gnome.desktop.interface icon-theme "Adwaita"
+	fi
+
+	echo "monocons successfully removed."
+	exit 0
+fi
+
+# INSTALL MODE
 
 echo "Installing $THEME_NAME..."
 

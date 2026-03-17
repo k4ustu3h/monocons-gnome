@@ -51,14 +51,16 @@ def extract_svg_data(svg_path):
     strip_namespace(root)
 
     viewbox = root.attrib.get("viewBox", "0 0 192 192")
-    _, _, width, height = map(float, viewbox.split())
+    _, _, width, height = map(float, viewbox.replace(",", " ").split())
+
+    for elem in root.iter():
+        elem.attrib.pop("fill", None)
+        elem.attrib.pop("stroke", None)
 
     elements = []
-    for elem in root.iter():
-        if elem.tag in {"path", "rect", "circle", "polygon", "g"}:
-            elem.attrib.pop("fill", None)
-            elem.attrib.pop("stroke", None)
-            elements.append(ET.tostring(elem, encoding="unicode"))
+    for child in root:
+        if child.tag in {"path", "rect", "circle", "polygon", "g", "defs"}:
+            elements.append(ET.tostring(child, encoding="unicode"))
 
     return "\n".join(elements), width, height
 

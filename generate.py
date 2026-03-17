@@ -3,7 +3,6 @@
 import os
 import re
 import shutil
-import subprocess
 import xml.etree.ElementTree as ET
 
 THEME_NAME = "monocons"
@@ -101,20 +100,11 @@ def generate_icons():
             print(f"generated {file}")
 
 
-def update_cache():
-    subprocess.run(
-        ["gtk-update-icon-cache", "-f", THEME_DIR],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-
-
 def main():
     ensure_dirs()
     copy_index()
     generate_icons()
-    update_cache()
-    print("\nmonocons rebuilt successfully\n")
+    print("\nmonocons generated successfully")
 
 
 if __name__ == "__main__":

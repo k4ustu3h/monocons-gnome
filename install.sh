@@ -2,6 +2,9 @@
 
 set -e
 
+# Ensure we are in the script's directory before copying relative paths
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
 THEME_NAME="monocons"
 INSTALL_DIR="$HOME/.local/share/monocons"
 ICON_DIR="$HOME/.local/share/icons/$THEME_NAME"
@@ -28,7 +31,6 @@ for arg in "$@"; do
 done
 
 # UNINSTALL MODE
-
 if [ "$UNINSTALL" = true ]; then
 	echo "Uninstalling $THEME_NAME..."
 
@@ -58,7 +60,6 @@ if [ "$UNINSTALL" = true ]; then
 fi
 
 # INSTALL MODE
-
 echo "Installing $THEME_NAME..."
 
 # Create directories
@@ -68,7 +69,7 @@ mkdir -p "$SYSTEMD_USER_DIR"
 
 # Copy theme files
 cp -r base "$INSTALL_DIR/"
-cp generate.py index.theme build.sh "$INSTALL_DIR/"
+cp generate.py map_icons.py icon_map.json index.theme build.sh "$INSTALL_DIR/"
 
 # Make build executable
 chmod +x "$INSTALL_DIR/build.sh"

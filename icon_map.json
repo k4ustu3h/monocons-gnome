@@ -1,0 +1,55 @@
+{
+	"brave-desktop": ["brave", "brave-browser", "com.brave.Browser"],
+	"com.mitchellh.ghostty": ["ghostty"],
+	"discord": [
+		"com.discordapp.Discord",
+		"com.discordapp.DiscordCanary",
+		"discord-canary",
+		"discord-ptb",
+		"vesktop"
+	],
+	"gimp": ["org.gimp.GIMP", "org.gimp.GIMP.beta"],
+	"github-desktop": ["io.github.shiftey.Desktop"],
+	"google-chrome": [
+		"chromium",
+		"chromium-browser",
+		"com.google.Chrome",
+		"google-chrome-beta",
+		"google-chrome-stable",
+		"google-chrome-unstable"
+	],
+	"java-openjdk": [
+		"java-1.8.0-openjdk",
+		"java-11-openjdk",
+		"java-17-openjdk",
+		"java-21-openjdk",
+		"java11-openjdk",
+		"java17-openjdk",
+		"java21-openjdk",
+		"java25-openjdk",
+		"java8-openjdk",
+		"openjdk-11",
+		"openjdk-17",
+		"openjdk-21",
+		"openjdk-8"
+	],
+	"onlyoffice-desktopeditors": ["org.onlyoffice.desktopeditors"],
+	"org.gnome.Calendar": ["gnome-calendar"],
+	"org.gnome.Nautilus": [
+		"nautilus",
+		"org.gnome.Files",
+		"system-file-manager"
+	],
+	"org.gnome.TextEditor": ["gnome-text-editor"],
+	"org.inkscape.Inkscape": ["inkscape"],
+	"packet-tracer": ["Cisco_Packet_Tracer_9.0.0"],
+	"qv4l2": ["org.qv4l2.Qv4l2", "qvidcap"],
+	"visual-studio-code": [
+		"code",
+		"code-insiders",
+		"code-oss",
+		"com.visualstudio.code",
+		"com.visualstudio.code.insiders"
+	],
+	"vlc": ["org.videolan.VLC"]
+}

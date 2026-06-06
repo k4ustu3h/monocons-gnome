@@ -69,7 +69,7 @@ mkdir -p "$SYSTEMD_USER_DIR"
 
 # Copy theme files
 cp -r base src "$INSTALL_DIR/"
-cp index.theme build.sh "$INSTALL_DIR/"
+cp icon_map.json index.theme build.sh "$INSTALL_DIR/"
 
 # Make build executable
 chmod +x "$INSTALL_DIR/build.sh"

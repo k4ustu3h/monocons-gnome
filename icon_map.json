@@ -4,6 +4,7 @@
 	"arduino-ide": ["arduino-ide-v2"],
 	"bleachbit": [],
 	"brave-desktop": ["brave-browser", "brave", "com.brave.Browser"],
+	"brave-origin": [],
 	"cloudflare": ["zero-trust-orange"],
 	"cmake": ["CMakeSetup"],
 	"collision": ["dev.geopjr.Collision"],

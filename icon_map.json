@@ -16,7 +16,9 @@
 		"vesktop"
 	],
 	"figma-linux": [],
+	"firefox": ["org.mozilla.firefox"],
 	"fragments": ["de.haeckerfelix.Fragments"],
+	"g-helper": ["ghelper"],
 	"gdm-settings": ["io.github.realmazharhussain.GdmSettings"],
 	"ghostty": ["com.mitchellh.ghostty"],
 	"gimp": ["org.gimp.GIMP", "org.gimp.GIMP.beta"],
@@ -49,6 +51,7 @@
 	],
 	"htop": [],
 	"inkscape": ["org.inkscape.Inkscape"],
+	"ipython": [],
 	"java-openjdk": [
 		"java-1.8.0-openjdk",
 		"java-11-openjdk",
@@ -82,7 +85,10 @@
 	],
 	"network-wired": [],
 	"nvidia": ["nvidia-settings"],
-	"onlyoffice": ["org.onlyoffice.desktopeditors"],
+	"onlyoffice": [
+		"onlyoffice-desktopeditors",
+		"org.onlyoffice.desktopeditors"
+	],
 	"packet-tracer": ["Cisco_Packet_Tracer_9.0.0"],
 	"piper": ["org.freedesktop.Piper"],
 	"pixelflasher": [],

@@ -1,6 +1,7 @@
 {
 	"alacarte": [],
 	"android-studio": [],
+	"antigravity": ["antigravity-ide"],
 	"arduino-ide": ["arduino-ide-v2"],
 	"bleachbit": [],
 	"brave-desktop": ["brave-browser", "brave", "com.brave.Browser"],

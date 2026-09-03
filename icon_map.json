@@ -52,6 +52,7 @@
 	],
 	"htop": [],
 	"inkscape": ["org.inkscape.Inkscape"],
+	"io.github.materialgnome.Manager": [],
 	"ipython": [],
 	"java-openjdk": [
 		"java-1.8.0-openjdk",

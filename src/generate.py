@@ -20,10 +20,22 @@ CANVAS_SIZE = 192
 INNER_SIZE = 118
 INNER_OFFSET = (CANVAS_SIZE - INNER_SIZE) / 2
 
+COLORS_CSS = os.path.expanduser("~/.config/gtk-4.0/colors.css")
 GTK_CSS = os.path.expanduser("~/.config/gtk-4.0/gtk.css")
 
 
+def get_primary_color():
+    """Extracts the --primary CSS variable from colors.css."""
+    if os.path.exists(COLORS_CSS):
+        with open(COLORS_CSS) as f:
+            match = re.search(r"--primary:\s*(#[0-9a-fA-F]+);?", f.read())
+            if match:
+                return match.group(1)
+    return None
+
+
 def get_gtk_color(name):
+    """Extracts standard @define-color GTK variables from gtk.css."""
     if not os.path.exists(GTK_CSS):
         return None
 
@@ -34,7 +46,8 @@ def get_gtk_color(name):
 
 
 def get_accent():
-    return get_gtk_color("accent_color") or "#7f5af0"
+    """Cascades through colors.css, then gtk.css, then the hardcoded fallback."""
+    return get_primary_color() or get_gtk_color("accent_color") or "#7f5af0"
 
 
 def get_background():
